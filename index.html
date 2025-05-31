@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>स्मार्ट पंप</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+
+  <style>
+      body {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+    }
+  </style>
+
+
+  <link rel="apple-touch-icon" href="/logo/icon-192x192.png" />
+
+
+</head>
+<body class="font-sans text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <div class="flex items-center gap-2">
+        <span class="text-blue-500 text-xl font-bold">स्मार्ट पंप</span>
+      </div>
+      <nav class="flex items-center gap-6 text-sm">
+        <a href="#" class="hover:text-blue-600">होम</a>
+        <a href="#aboutus" class="hover:text-blue-600">हमारे बारे में</a>
+        <a href="#feature" class="hover:text-blue-600">मुख्य विशेषताएं</a>
+        <a href="#howtouse" class="hover:text-blue-600">उपयोग कैसे करें ?</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-blue-50 py-6">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div class="p-3">
+        <h1 class="text-4xl font-bold mb-4">किसानों के लिए सिंचाई का स्मार्ट समाधान
+        </h1>
+        <p class="mb-4">"अब सिंचाई की झंझट खत्म – बस एक क्लिक और पंप चालू!"</p>
+        <div class="flex gap-4" onclick="openAppModal()">
+            <button  type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              ऐप डाउनलोड करें
+              <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+            </button>
+        </div>
+      </div>
+      <img src="./assest/heroimage.png" alt="Farm" class="rounded-lg shadow" />
+    </div>
+
+
+    <!-- Modal -->
+  <div id="appdownload" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white  rounded-lg shadow-lg p-2 w-[300px] max-w-2xl relative">
+      <button onclick="closeAppModal()" class="absolute z-50 top-2 right-3 text-gray-500 text-xl font-bold">&times;</button>
+      <div class="w-40 h-40 bg-white w-full rounded-2xl shadow-md border p-3 relative flex flex-col justify-center items-center">
+        <!-- QR Code -->
+        <div class="flex flex-col justify-center items-center">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-18 h-18 mb-1" />
+          <p class="text-xs text-gray-700 mt-2 text-center">ऐप डाउनलोड करने के लिए स्कैन करें</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+   <!-- Hero -->
+  <!-- <section class="bg-white-50 py-12">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-8">उपयोग कैसे करें</h2>
+    </div>
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+  
+      <img src="./assest/heroimage.png" alt="Farm" class="rounded-lg shadow" />
+        <div class="p-4">
+        <p class="mb-4">अपने क्षेत्र क्षेत्र में पंप का उपयोग करने के लिए स्कैन करें, कनेक्ट करें और भुगतान करें
+        </p>
+        <div class="flex gap-4">
+            <button class="bg-blue-600 text-bold border px-4 py-2 rounded">
+                ऐप डाउनलोड करें
+            </button>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+
+
+
+  <!-- Features -->
+  <section class="py-12 bg-white" id="feature">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-8">मुख्य विशेषताएं</h2>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 p-6 lg:grid-cols-3 gap-6 text-left">
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-2 text-blue-600">किसानों के लिए</h3>
+            <p class="text-gray-600">हमारा समाधान विशेष रूप से ग्रामीण और कृषि क्षेत्रों की आवश्यकताओं को ध्यान में रखकर बनाया गया है।</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-2 text-blue-600">स्मार्ट तकनीक</h3>
+            <p class="text-gray-600">QR कोड, रिमोट कंट्रोल, और ऐप-आधारित संचालन — सब कुछ एक ही प्लेटफ़ॉर्म पर।</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold mb-2 text-blue-600">बचत और नियंत्रण</h3>
+            <p class="text-gray-600">आपका पंप तब चले जब ज़रूरत हो — पानी और बिजली दोनों की बचत।</p>
+        </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+   
+  <section class="bg-blue-50 py-12" id="howtouse">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-8">उपयोग कैसे करें</h2>
+    </div>
+    
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <img src="./assest/heroimage2.png" alt="Farm" class="rounded-lg shadow" />
+      <div class="p-4">
+        <p class="mb-4">अपने क्षेत्र में पंप का उपयोग करने के लिए स्कैन करें, कनेक्ट करें और भुगतान करें</p>
+        <div class="flex gap-4">
+          <button class="bg-blue-600 text-white font-semibold px-4 py-2 rounded">
+            ऐप डाउनलोड करें
+          </button>
+          <button onclick="openModal()" class="bg-green-600 text-white font-semibold px-4 py-2 rounded">
+            वीडियो देखें
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+      <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-2xl relative">
+        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 text-xl font-bold">&times;</button>
+        <div class="aspect-w-16 aspect-h-9">
+          <iframe class="w-full h-64 md:h-96" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="वीडियो" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+<!-- Pump List -->
+
+<section class="bg-white py-12" id="howtouse">
+
+  <div class="container mx-auto text-center px-4">
+    <h2 class="text-3xl font-semibold mb-8">हमारे पंप</h2>
+  </div>
+
+  <div class="px-6 flex flex-row gap-3 justify-between">
+    <div class="w-40 h-40 bg-white rounded-2xl shadow-md border p-3 relative flex flex-col justify-between">
+
+    <div class="flex justify-between mb-1 items-center">
+      <h2 class="text-sm font-bold ">Pump ID</h2>
+      <span class="bg-green-100 mt-1 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Active</span>
+    </div>
+
+
+        <!-- QR Code -->
+      <div class="flex justify-center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
+      </div>
+
+
+      <!-- Header -->
+      <div class="flex justify-center items-start">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold"># 30002</h2>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="w-40 h-40 bg-white rounded-2xl shadow-md border p-3 relative flex flex-col justify-between">
+
+    <div class="flex justify-between mb-1 items-center">
+      <h2 class="text-sm font-bold ">Pump ID</h2>
+      <span class="bg-red-50 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Busy</span>
+    </div>
+
+
+        <!-- QR Code -->
+      <div class="flex justify-center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
+      </div>
+      <!-- Header -->
+      <div class="flex justify-center items-start">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold"># 30002</h2>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="w-40 h-40 bg-white rounded-2xl shadow-md border p-3 relative flex flex-col justify-between">
+
+    <div class="flex justify-between mb-1 items-center">
+      <h2 class="text-sm font-bold ">Pump ID</h2>
+      <span class="bg-green-100 mt-1 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Active</span>
+    </div>
+
+
+        <!-- QR Code -->
+      <div class="flex justify-center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
+        
+      </div>
+
+
+      <!-- Header -->
+      <div class="flex justify-center items-start">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold"># 30002</h2>
+        </div>
+      </div>
+    </div>
+    <div class="w-40 h-40 bg-white rounded-2xl shadow-md border p-3 relative flex flex-col justify-between">
+
+    <div class="flex justify-between mb-1 items-center">
+      <h2 class="text-sm font-bold ">Pump ID</h2>
+      <span class="bg-green-100 mt-1 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Active</span>
+    </div>
+
+
+        <!-- QR Code -->
+      <div class="flex justify-center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
+        
+      </div>
+
+
+      <!-- Header -->
+      <div class="flex justify-center items-start">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold"># 30002</h2>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="w-40 h-40 bg-white rounded-2xl shadow-md border p-3 relative flex flex-col justify-between">
+
+    <div class="flex justify-between mb-1 items-center">
+      <h2 class="text-sm font-bold ">Pump ID</h2>
+      <span class="bg-red-50 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Busy</span>
+    </div>
+
+
+      <!-- QR Code -->
+    <div class="flex justify-center">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
+    </div>
+
+
+    <!-- Header -->
+    <div class="flex justify-center items-start">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold"># 30002</h2>
+      </div>
+    </div>
+
+
+    </div>
+
+  </div>
+</section>
+
+
+
+  <!-- Help section -->
+<section class="py-12 bg-blue-50" id="aboutus">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">हमारे बारे में</h2>
+    <p class="max-w-3xl mx-auto text-gray-600 text-lg">
+      स्मार्ट पंप एक नवाचार है जो किसानों को स्मार्टफोन के ज़रिए अपने पानी के पंप को चलाने, बंद करने और मॉनिटर करने की सुविधा देता है।
+      यह तकनीक न केवल समय की बचत करती है बल्कि पानी और बिजली की भी बचत करती है। हमारा उद्देश्य तकनीक के माध्यम से खेती को सरल और स्मार्ट बनाना है।
+    </p>
+  </div>
+</section>
+
+  <!-- Footer -->
+ <footer class="bg-gray-800 text-white p-8">
+  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- Navigation Card -->
+    <div class="bg-gray-900 rounded-lg p-6 shadow">
+      <h4 class="text-lg font-semibold mb-4">त्वरित लिंक</h4>
+      <ul class="space-y-2 text-sm text-gray-300">
+        <li><a href="#how" class="hover:text-white">💡 उपयोग कैसे करें</a></li>
+        <li><a href="#help" class="hover:text-white">📞 सहायता</a></li>
+        <li><a href="/blog" class="hover:text-white">📚 ब्लॉग</a></li>
+        <li><a href="/download" class="hover:text-white">⬇ ऐप डाउनलोड</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Card -->
+    <div class="bg-gray-900 rounded-lg p-6 shadow">
+      <h4 class="text-lg font-semibold mb-4">संपर्क करें</h4>
+      <ul class="space-y-2 text-sm text-gray-300">
+        <li>📞 +91 96252 96364</li>
+        <li>📧 rakeshran750@gmail.com</li>
+        <li>🌐 www.smartpump.com</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="text-center text-gray-400 text-sm mt-8 border-t border-gray-700 pt-4">
+    © 2025 स्मार्ट पंप. सर्वाधिकार सुरक्षित।
+  </div>
+</footer>
+
+
+  <script>
+
+    function openModal() {
+      document.getElementById("videoModal").classList.remove("hidden");
+    }
+    function closeModal() {
+      document.getElementById("videoModal").classList.add("hidden");
+    }
+
+    function openAppModal() {
+    const isMobileOrTablet = /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+
+    if (isMobileOrTablet) {
+      // Redirect to mobile.html
+      window.location.href = "app.html";
+    } else {
+      // Show modal on desktop
+      document.getElementById("appdownload").classList.remove("hidden");
+    }
+  }
+
+    function closeAppModal() {
+      document.getElementById("appdownload").classList.add("hidden");
+    }
+  </script>
+
+</body>
+</html>

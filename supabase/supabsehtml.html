@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Supabase Realtime (HTML)</title>
+</head>
+<body>
+  <h1>Pump Realtime Updates</h1>
+  <pre id="output">Listening for changes...</pre>
+
+  <!-- Supabase CDN -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    // ✅ Replace with your Supabase credentials
+    const supabaseUrl = 'https://your-project.supabase.co';
+    const supabaseKey = 'your-anon-key';
+
+    // ✅ Create client
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const output = document.getElementById('output');
+
+    // ✅ Subscribe to all changes in "pumps" table
+    supabase
+      .channel('custom-all-pumps')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'pumps' },
+        (payload) => {
+          console.log('Change received!', payload);
+          output.textContent = JSON.stringify(payload, null, 2);
+        }
+      )
+      .subscribe();
+  </script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>स्मार्ट पंप</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <meta name="theme-color" content="#2196f3" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/logo/icon-192x192.png" />
+
+
+</head>
+<body class="bg-blue-50 text-gray-800 font-sans">
+
+<!-- No login Section -->
+<div id="notloggedin">
+  <!-- मोबाइल नंबर कार्ड -->
+  <div class="px-4 h-[100vh] flex justify-center items-center" id="mobileFormSec">
+    <div class="max-w-sm  mx-auto mt-12 p-6 bg-white rounded-2xl shadow ">
+      <h2 class="text-2xl font-bold mb-4 text-center">मोबाइल नंबर दर्ज करें</h2>
+      <form id="mobileForm">
+        <label class="block text-sm font-medium text-gray-700 mb-1">मोबाइल नंबर</label>
+        <input type="tel" id="mobile" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="10 अंकों का नंबर" oninput="">
+        <button type="submit" id="sendOtpBtn" class="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg font-semibold">OTP भेजें</button>
+      </form>
+
+    </div>
+  </div>
+
+
+  <!-- OTP इनपुट कार्ड -->
+
+  <div class="px-4 h-[100vh] flex justify-center items-center hidden" id="otpsec">
+    <div class="max-w-sm mx-auto mt-8 p-6 bg-white rounded-2xl shadow">
+      <h2 class="text-2xl font-bold mb-4 text-center">OTP दर्ज करें</h2>
+      <form onsubmit="handleOtpSubmit(event)">
+        <label class="block text-sm font-medium text-gray-700 mb-3 text-center">प्राप्त OTP (4 अंकों में)</label>
+        <div class="flex justify-between gap-2 mb-4">
+          <input type="text" maxlength="1" oninput="moveToNext(this, 'otp2')" id="otp1" class="w-12 h-12 text-center text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input type="text" maxlength="1" oninput="moveToNext(this, 'otp3')" id="otp2" class="w-12 h-12 text-center text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input type="text" maxlength="1" oninput="moveToNext(this, 'otp4')" id="otp3" class="w-12 h-12 text-center text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input type="text" maxlength="1" id="otp4" class="w-12 h-12 text-center text-lg border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700">आगे बढ़ें</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- प्रोफ़ाइल जानकारी कार्ड -->
+  <div class="px-4 h-[100vh] flex justify-center items-center hidden">
+    <div class="max-w-sm mx-auto mt-8 p-6 bg-white rounded-2xl shadow ">
+      <h2 class="text-2xl font-bold mb-4 text-center">प्रोफ़ाइल जानकारी दर्ज करें</h2>
+      <form>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-1">पूरा नाम</label>
+          <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="अपना नाम दर्ज करें">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-1">ईमेल</label>
+          <input type="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="example@email.com">
+        </div>
+
+        <!-- बटन सेक्शन -->
+        <div class="flex justify-between gap-4">
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">प्रोफ़ाइल सहेजें</button>
+          <button type="button" onclick="skipProfile()" class="w-full bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition">स्किप करें</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="loggedin">
+    <!-- Header -->
+    <nav class="fixed top-0 left-0 right-0 bg-white border-t">
+      <div class="p-4 flex justify-between items-center">
+        <div>
+          <h1 class="text-xl font-bold text-blue-700">स्मार्ट पंप</h1>
+          <p class="text-sm text-gray-500">नमस्ते किसान मित्र</p>
+        </div>
+        <button class="px-3 py-1 bg-gray-200 text-sm rounded-full" onclick="toggleFullScreen()">
+          <img src="./assest/icons/bell-svgrepo-com.svg" alt="होम" class="w-6 h-6 mb-1" />
+        </button>
+      </div>
+    </nav>
+
+    <!-- Bottom Navigation -->
+    <div class="mt-8">
+        <div class="h-20">
+            <h1 class="text-transparent">hello</h1>
+        </div>
+      <!-- Main Scan Button -->
+      <div class="flex justify-center my-6">
+        <button onclick="openCamera()" class="bg-blue-600 text-white text-lg font-semibold rounded-full w-40 h-40 flex items-center justify-center shadow-lg">
+          पंप स्कैन करें
+        </button>
+      </div>
+
+      <!-- Options -->
+      <div class="grid grid-cols-3 gap-4 text-center px-4">
+        <div>
+          <div class="text-blue-600 text-2xl">↩️</div>
+          <p class="text-sm mt-1">मेरा इतिहास</p>
+        </div>
+        <div>
+          <div class="text-blue-600 text-2xl">💰</div>
+          <p class="text-sm mt-1">बैलेंस जोड़ें</p>
+        </div>
+        <div>
+          <div class="text-blue-600 text-2xl">📞</div>
+          <p class="text-sm mt-1">मदद</p>
+        </div>
+    </div>
+
+
+    <!-- Weather Card -->
+    <div class="mt-1 px-4">
+      <div class="bg-yellow-50 p-5 rounded shadow-md">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-semibold text-lg text-yellow-800">🌤️ आज का मौसम</h3>
+          <span class="text-sm text-gray-500">शनिवार, 1 जून</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <!-- <img src="https://www.svgrepo.com/show/245008/sun.svg" alt="weather icon" class="w-12 h-12"> -->
+          <div>
+            <p class="text-xl font-bold text-yellow-700">34°C</p>
+            <p class="text-sm text-gray-600">आंशिक रूप से बादल</p>
+          </div>
+        </div>
+        <div class="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600">
+          <p>💧 नमी: <strong>58%</strong></p>
+          <p>🌬️ हवा: <strong>12 km/h</strong></p>
+          <p>🌅 सूर्योदय: <strong>05:28 AM</strong></p>
+          <p>🌇 सूर्यास्त: <strong>07:15 PM</strong></p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Recent Activity -->
+    <div class="mt-8 px-4">
+
+    <div class="max-w-md mx-auto p-4 bg-white rounded-2xl shadow-md border">
+        <h2 class="font-semibold text-lg mb-3">हाल की गतिविधियां</h2>
+        <div class="bg-gray-100 rounded p-3 mb-2">
+          <div class="flex justify-between items-center">
+            <div>
+              <p>💧 पंप #12345</p>
+              <p class="text-sm text-gray-500">📍 रामपुर • 2 घंटे पहले</p>
+            </div>
+            <p class="font-bold">₹150</p>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded p-3">
+          <div class="flex justify-between items-center">
+            <div>
+              <p>💧 पंप #12344</p>
+              <p class="text-sm text-gray-500">📍 सूरतपुर • 2 दिन पहले</p>
+            </div>
+            <p class="font-bold">₹200</p>
+          </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Payment Options -->
+    <div class="mt-8 px-4">
+      <h2 class="font-semibold text-lg mb-3">भुगतान विकल्प</h2>
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div class="border p-2 rounded shadow-sm">📱 PhonePe</div>
+        <div class="border p-2 rounded shadow-sm">🅶 Google Pay</div>
+        <div class="border p-2 rounded shadow-sm">💳 कार्ड</div>
+      </div>
+    </div>
+
+    <!-- Current Pump -->
+    <div class="mt-8 px-4">
+      <div class="max-w-md mx-auto p-4 bg-white rounded-2xl shadow-md border">
+      <h2 class="font-semibold text-lg mb-3">वर्तमान चालू पंप</h2>
+
+        <div class="flex justify-between items-start">
+          <div>
+            <h2 class="text-xl font-bold">Pump ID: WP-001</h2>
+            <p class="text-gray-500">North Field Station</p>
+          </div>
+          <span class="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-full">Active</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-3 text-center gap-4">
+          <div>
+            <p class="text-sm text-gray-500">Running Time</p>
+            <p class="text-lg font-bold">01:23:45</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Water Used</p>
+            <p class="text-lg font-bold">234 L</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Current Cost</p>
+            <p class="text-lg font-bold">₹120.50</p>
+          </div>
+        </div>
+
+        <button class="mt-6 w-full flex items-center justify-center gap-2 text-white bg-red-500 hover:bg-red-600 font-semibold py-3 rounded-xl transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+          Stop Session
+        </button>
+      </div>
+    </div>
+
+
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md">
+      <div class="grid grid-cols-4 text-center text-sm text-gray-700">
+        <div class="flex flex-col items-center justify-center py-2 text-blue-600">
+          <img src="./assest/icons/home-1-svgrepo-com.svg" alt="होम" class="w-6 h-6 mb-1" />
+          <span class="font-semibold">होम</span>
+        </div>
+        <div class="flex flex-col items-center justify-center py-2 hover:text-blue-600 cursor-pointer">
+          <img src="./assest/icons/history-svgrepo-com.svg" alt="इतिहास" class="w-6 h-6 mb-1" />
+          <span>इतिहास</span>
+        </div>
+        <div onclick="logout()" class="flex flex-col items-center justify-center py-2 hover:text-blue-600 cursor-pointer">
+          <img src="./assest/icons/profile-svgrepo-com.svg" alt="प्रोफाइल" class="w-6 h-6 mb-1" />
+          <span>प्रोफाइल</span>
+        </div>
+        <div class="flex flex-col items-center justify-center py-2 hover:text-blue-600 cursor-pointer">
+          <img src="./assest/icons/setting-svgrepo-com.svg" alt="सेटिंग्स" class="w-6 h-6 mb-1" />
+          <span>सेटिंग्स</span>
+        </div>
+      </div>
+    </nav>
+</div>
+</body>
+
+<script>
+
+
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('Service Worker Registered!', reg))
+        .catch(err => console.log('SW registration failed: ', err));
+    }
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  isThisPhone();
+  toggleFullScreen();
+  let isuserLoggedIn = isUserLoggedIn()
+  if(isuserLoggedIn){
+    hideById("notloggedin");
+    showById("loggedin");
+  }else{
+    hideById("loggedin");
+    showById("notloggedin");
+  }
+});
+
+function showById(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+}
+
+function hideById(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('hidden');
+}
+
+
+function isUserLoggedIn() {
+  // Check if 'mob' key exists in localStorage and is not empty
+  const mob = localStorage.getItem('mob');
+  return !!(mob && mob.trim());
+}
+
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    // Request full screen for the entire page
+    document.documentElement.requestFullscreen().catch(err => {
+      console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+    });
+  } else {
+    // Exit full screen
+    document.exitFullscreen();
+  }
+}
+
+function checkMobile(mobile) {
+  if (mobile && mobile.trim().length === 10) {
+    localStorage.setItem('mobno', mobile.trim());
+  }
+}
+
+
+// Enable button only if 10 digits entered
+document.getElementById('mobile').addEventListener('input', function() {
+  const btn = document.getElementById('sendOtpBtn');
+  btn.disabled = this.value.trim().length !== 10;
+});
+
+
+ function isThisPhone() {
+    const isMobileOrTablet = /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+    if (!isMobileOrTablet) {
+      // Redirect to mobile.html
+      window.location.href = "index.html";
+    } 
+  }
+
+  // Submit handler for mobile form
+  document.getElementById('mobileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const mobile = document.getElementById('mobile').value.trim();
+    if (mobile.length === 10) {
+      localStorage.setItem('mob', mobile);
+      hideById("mobileFormSec");
+      showById("otpsec");
+    }
+  });
+  function logout() {
+    localStorage.clear();
+    window.location.reload();
+    toggleFullScreen();
+  }
+
+</script>
+</html>
