@@ -7,9 +7,43 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
 
-  <meta name="theme-color" content="#2196f3" />
+  <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/logo/icon-192x192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+      deferredPrompt = e;
+
+
+      setTimeout(() => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted install');
+            } else {
+              console.log('User dismissed install');
+            }
+            deferredPrompt = null;
+          });
+        }
+      }, 2000);
+    });
+    </script>
+
 
 
 </head>

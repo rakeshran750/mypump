@@ -1,7 +1,7 @@
 {
   "name": "My Smart Pump",
   "short_name": "MY PUMP",
-  "start_url": "/",
+  "start_url": "/app.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2196f3",
