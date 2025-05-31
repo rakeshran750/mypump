@@ -19,6 +19,7 @@
 
 
 </head>
+
 <body class="font-sans text-gray-800">
   <!-- Header -->
   <header class="bg-white shadow">
@@ -211,36 +212,47 @@
 </section>
 
   <!-- Footer -->
- <footer class="bg-gray-800 text-white p-8">
-  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <!-- Navigation Card -->
-    <div class="bg-gray-900 rounded-lg p-6 shadow">
-      <h4 class="text-lg font-semibold mb-4">त्वरित लिंक</h4>
-      <ul class="space-y-2 text-sm text-gray-300">
-        <li><a href="#how" class="hover:text-white">💡 उपयोग कैसे करें</a></li>
-        <li><a href="#help" class="hover:text-white">📞 सहायता</a></li>
-        <li><a href="/blog" class="hover:text-white">📚 ब्लॉग</a></li>
-        <li><a href="/download" class="hover:text-white">⬇ ऐप डाउनलोड</a></li>
-      </ul>
+  <footer class="bg-gray-900 text-white py-10">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row md:justify-between gap-8">
+      <!-- Brand & About -->
+      <div class="mb-8 md:mb-0 flex-1 min-w-[220px]">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-blue-400 text-2xl font-bold">स्मार्ट पंप</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          किसानों के लिए सिंचाई का स्मार्ट समाधान। तकनीक के साथ खेती को बनाएं आसान और स्मार्ट।
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="mb-8 md:mb-0 flex-1 min-w-[180px]">
+        <h4 class="text-lg font-semibold mb-4 text-blue-300">त्वरित लिंक</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#howtouse" class="hover:text-blue-400 transition">💡 उपयोग कैसे करें</a></li>
+          <li><a href="#aboutus" class="hover:text-blue-400 transition">📞 सहायता</a></li>
+          <li><a href="/blog" class="hover:text-blue-400 transition">📚 ब्लॉग</a></li>
+          <li><a href="/download" class="hover:text-blue-400 transition">⬇ ऐप डाउनलोड</a></li>
+        </ul>
+      </div>
+      <!-- Contact -->
+      <div class="flex-1 min-w-[200px]">
+        <h4 class="text-lg font-semibold mb-4 text-blue-300">संपर्क करें</h4>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span>📞</span> <a href="tel:+919625296364" class="hover:text-blue-400 transition">+91 96252 96364</a></li>
+          <li class="flex items-center gap-2"><span>📧</span> <a href="mailto:rakeshran750@gmail.com" class="hover:text-blue-400 transition">rakeshran750@gmail.com</a></li>
+          <li class="flex items-center gap-2"><span>🌐</span> <a href="https://www.smartpump.com" target="_blank" class="hover:text-blue-400 transition">www.smartpump.com</a></li>
+        </ul>
+        <div class="flex gap-4 mt-4">
+          <a href="#" aria-label="Facebook" class="hover:text-blue-500 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.877v-6.987h-2.54v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.632.771-1.632 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12"></path></svg></a>
+          <a href="#" aria-label="Twitter" class="hover:text-blue-400 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.47.69a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04A4.28 4.28 0 0 0 16.11 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 8.99 4.07 7.13 1.64 4.15c-.37.64-.58 1.39-.58 2.19 0 1.51.77 2.84 1.94 3.62-.72-.02-1.39-.22-1.98-.55v.06c0 2.11 1.5 3.87 3.5 4.27-.36.1-.74.16-1.13.16-.28 0-.54-.03-.8-.08.54 1.69 2.12 2.92 3.99 2.95A8.6 8.6 0 0 1 2 19.54c-.34 0-.67-.02-1-.06A12.13 12.13 0 0 0 7.29 21.5c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.54A8.18 8.18 0 0 0 22.46 6z"></path></svg></a>
+          <a href="#" aria-label="YouTube" class="hover:text-red-500 transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M21.8 8.001s-.2-1.4-.8-2c-.7-.8-1.5-.8-1.9-.9C16.2 5 12 5 12 5h-.1s-4.2 0-7.1.1c-.4.1-1.2.1-1.9.9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.6c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.7.8 1.7.8 2.1.9 1.5.1 6.9.1 6.9.1s4.2 0 7.1-.1c.4-.1 1.2-.1 1.9-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.6c0-1.6-.2-3.2-.2-3.2zM9.8 15.3V8.7l6.4 3.3-6.4 3.3z"></path></svg></a>
+        </div>
+      </div>
     </div>
-
-    <!-- Contact Card -->
-    <div class="bg-gray-900 rounded-lg p-6 shadow">
-      <h4 class="text-lg font-semibold mb-4">संपर्क करें</h4>
-      <ul class="space-y-2 text-sm text-gray-300">
-        <li>📞 +91 96252 96364</li>
-        <li>📧 rakeshran750@gmail.com</li>
-        <li>🌐 www.smartpump.com</li>
-      </ul>
+    <div class="text-center text-gray-500 text-xs mt-10 border-t border-gray-800 pt-4">
+      © 2025 स्मार्ट पंप. सर्वाधिकार सुरक्षित।
     </div>
+  </footer>
 
-  </div>
-
-  <!-- Bottom -->
-  <div class="text-center text-gray-400 text-sm mt-8 border-t border-gray-700 pt-4">
-    © 2025 स्मार्ट पंप. सर्वाधिकार सुरक्षित।
-  </div>
-</footer>
 
 
   <script>
