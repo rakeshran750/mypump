@@ -8,15 +8,15 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <meta name="theme-color" content="#000000" />
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/logo/icon-192x192.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./logo/icon-192x192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
 
   <script>
     // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js');
+        navigator.serviceWorker.register('./service-worker.js');
       });
     }
 
