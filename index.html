@@ -14,7 +14,7 @@
     }
   </style>
   <link rel="icon" type="image/png" href="/logo/icon-192x192.png" />
-  
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body class="font-sans text-gray-800">
   <!-- Header -->
@@ -117,7 +117,7 @@
       <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-2xl relative">
         <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 text-xl font-bold">&times;</button>
         <div class="aspect-w-16 aspect-h-9">
-          <iframe class="w-full h-64 md:h-96" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="वीडियो" frameborder="0" allowfullscreen></iframe>
+          <iframe class="w-full h-64 md:h-96" src="https://youtu.be/0vhLuGlVWdY?si=2Mt85CRhkvdgwgFr" title="वीडियो" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -125,72 +125,14 @@
 
 
 
-
 <!-- Pump List -->
-
 <section class="bg-white py-12" id="howtouse">
   <div class="container mx-auto text-center px-4">
     <h2 class="text-3xl font-semibold mb-8">हमारे पंप</h2>
   </div>
 
-  <div class="px-6 flex flex-wrap gap-4 justify-center md:justify-between">
-    <div class="w-72 h-40 bg-white rounded-2xl shadow-md border p-3 flex flex-col justify-between mb-4">
-      <div class="flex justify-between mb-1 items-center">
-        <h2 class="text-sm font-bold">Pump ID</h2>
-        <span class="bg-green-100 mt-1 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Active</span>
-      </div>
-      <div class="flex justify-center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
-      </div>
-      <div class="flex justify-center items-start">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold"># 30002</h2>
-        </div>
-      </div>
-    </div>
-    <div class="w-72 h-40 bg-white rounded-2xl shadow-md border p-3 flex flex-col justify-between mb-4">
-      <div class="flex justify-between mb-1 items-center">
-        <h2 class="text-sm font-bold">Pump ID</h2>
-        <span class="bg-red-50 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Busy</span>
-      </div>
-      <div class="flex justify-center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
-      </div>
-      <div class="flex justify-center items-start">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold"># 30002</h2>
-        </div>
-      </div>
-    </div>
-    <div class="w-72 h-40 bg-white rounded-2xl shadow-md border p-3 flex flex-col justify-between mb-4">
-      <div class="flex justify-between mb-1 items-center">
-        <h2 class="text-sm font-bold">Pump ID</h2>
-        <span class="bg-green-100 mt-1 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Active</span>
-      </div>
-      <div class="flex justify-center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
-      </div>
-      <div class="flex justify-center items-start">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold"># 30002</h2>
-        </div>
-      </div>
-    </div>
+  <div class="px-6 flex flex-wrap gap-4 justify-center md:justify-between" id="pump_list">
 
-    <div class="w-72 h-40 bg-white rounded-2xl shadow-md border p-3 flex flex-col justify-between mb-4">
-      <div class="flex justify-between mb-1 items-center">
-        <h2 class="text-sm font-bold">Pump ID</h2>
-        <span class="bg-red-50 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Busy</span>
-      </div>
-      <div class="flex justify-center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=WP-001" alt="QR Code" class="w-16 h-16" />
-      </div>
-      <div class="flex justify-center items-start">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold"># 30002</h2>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -253,6 +195,12 @@
 
   <script>
 
+    
+  document.addEventListener('DOMContentLoaded', async function() {
+    const pumpdata =await fetchsupadata('pump');
+    renderPumpList(pumpdata)
+  });
+
     function openModal() {
       document.getElementById("videoModal").classList.remove("hidden");
     }
@@ -275,7 +223,79 @@
     function closeAppModal() {
       document.getElementById("appdownload").classList.add("hidden");
     }
-  </script>
+
+
+    
+  /* Supabase client setup */
+  const SUPABASE_URL = 'https://gxzwomspqmdlbwqmursb.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4endvbXNwcW1kbGJ3cW11cnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3ODkxNzIsImV4cCI6MjA2NDM2NTE3Mn0.S-IG5DEmllDPxCDeKfKjRyjYvDcbM_JAmRQqtqMQpLc';
+  const supabaseclient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+  // Example: data from pump
+  async function fetchsupadata(model) {
+    const { data, error } = await supabaseclient
+      .from(model)
+      .select('*')
+    if (error) {
+      console.error('Error fetching profile:', error);
+      return null;
+    }
+    console.log(`here is ${model} data`)
+    console.log(data)
+    return data;
+  }
+
+
+  /* Real-time updates for pump table */
+  supabaseclient
+    .channel('pump-changes')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'pump' },
+      async (payload) => {
+        // Fetch latest data and re-render pump list
+        const pumpdata = await fetchsupadata('pump');
+        renderPumpList(pumpdata);
+      }
+    )
+    .subscribe();
+
+
+
+  function renderPumpList(pumpArray) {
+  const pumpListSection = document.getElementById('pump_list');
+  pumpListSection.innerHTML = '';
+  pumpArray.forEach(pump => {
+      const isBusy = pump.status === true;
+      const statusText = isBusy ? 'Busy' : 'Available';
+      const statusColor = isBusy ? 'red' : 'green';
+
+      const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(pump.pump_id)}`;
+
+      const cardHTML = `
+        <div id="pump-${pump.pump_id}" class="w-72 h-40 bg-white rounded-2xl shadow-md border p-3 flex flex-col justify-between mb-4">
+          <div class="flex justify-between mb-1 items-center">
+            <h2 class="text-sm font-bold">Pump ID</h2>
+            <span class="bg-${statusColor}-100 mt-1 text-${statusColor}-700 text-xs font-semibold px-2 py-0.5 rounded-full">${statusText}</span>
+          </div>
+          <div class="flex justify-center">
+            <img src="${qrCodeURL}" alt="QR Code" class="w-16 h-16" />
+          </div>
+          <div class="flex justify-center items-start">
+            <div class="text-center">
+              <h2 class="text-3xl font-bold"># ${pump.pump_no}</h2>
+            </div>
+          </div>
+        </div>
+      `;
+
+      pumpListSection.insertAdjacentHTML('beforeend', cardHTML);
+    });
+  }
+
+
+</script>
 
 </body>
 </html>

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>स्मार्ट पंप</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/logo/icon-192x192.png" />
@@ -42,7 +42,13 @@
         }
       }, 2000);
     });
+
+
+    
     </script>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
 
 
 
@@ -64,9 +70,7 @@
     </div>
   </div>
 
-
   <!-- OTP इनपुट कार्ड -->
-
   <div class="px-4 h-[100vh] flex justify-center items-center hidden" id="otpsec">
     <div class="max-w-sm mx-auto mt-8 p-6 bg-white rounded-2xl shadow">
       <h2 class="text-2xl font-bold mb-4 text-center">OTP दर्ज करें</h2>
@@ -132,6 +136,25 @@
           पंप स्कैन करें
         </button>
       </div>
+      <form id="pumpConnectForm" class="flex flex-col items-center my-4 gap-2">
+        <input id="pumpNoInput" type="text" maxlength="10" placeholder="पंप नंबर दर्ज करें" class="w-60 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center" />
+        <button type="submit" class="bg-green-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-green-700 transition">
+          कनेक्ट करें
+        </button>
+      </form>
+      <script>
+        function handlePumpConnectSubmit(e) {
+          e.preventDefault();
+          const pumpNo = document.getElementById('pumpNoInput').value.trim();
+          if (!pumpNo) {
+        alert('कृपया पंप नंबर दर्ज करें');
+        return;
+          }
+          startPump(pumpNo);
+        }
+        document.getElementById('pumpConnectForm').addEventListener('submit', handlePumpConnectSubmit);
+      </script>
+
 
       <!-- Options -->
       <div class="grid grid-cols-3 gap-4 text-center px-4">
@@ -211,41 +234,13 @@
     </div>
 
     <!-- Current Pump -->
-    <div class="mt-8 px-4">
-      <div class="max-w-md mx-auto p-4 bg-white rounded-2xl shadow-md border">
       <h2 class="font-semibold text-lg mb-3">वर्तमान चालू पंप</h2>
 
-        <div class="flex justify-between items-start">
-          <div>
-            <h2 class="text-xl font-bold">Pump ID: WP-001</h2>
-            <p class="text-gray-500">North Field Station</p>
-          </div>
-          <span class="bg-green-100 text-green-700 text-sm font-semibold px-3 py-1 rounded-full">Active</span>
-        </div>
+    <div class="mt-8 px-4" id="connectedpump">
 
-        <div class="mt-4 grid grid-cols-3 text-center gap-4">
-          <div>
-            <p class="text-sm text-gray-500">Running Time</p>
-            <p class="text-lg font-bold">01:23:45</p>
-          </div>
-          <div>
-            <p class="text-sm text-gray-500">Water Used</p>
-            <p class="text-lg font-bold">234 L</p>
-          </div>
-          <div>
-            <p class="text-sm text-gray-500">Current Cost</p>
-            <p class="text-lg font-bold">₹120.50</p>
-          </div>
-        </div>
-
-        <button class="mt-6 w-full flex items-center justify-center gap-2 text-white bg-red-500 hover:bg-red-600 font-semibold py-3 rounded-xl transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-          Stop Session
-        </button>
-      </div>
     </div>
+
+    
 
 
     </div>
@@ -271,6 +266,12 @@
         </div>
       </div>
     </nav>
+
+    <div class="h-20">
+        <h1 class="text-transparent">hello</h1>
+    </div>
+
+
 </div>
 </body>
 
@@ -278,17 +279,18 @@
 
 
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => console.log('Service Worker Registered!', reg))
-        .catch(err => console.log('SW registration failed: ', err));
-    }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('Service Worker Registered!', reg))
+      .catch(err => console.log('SW registration failed: ', err));
+  }
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   isThisPhone();
   toggleFullScreen();
+
   let isuserLoggedIn = isUserLoggedIn()
   if(isuserLoggedIn){
     hideById("notloggedin");
@@ -297,7 +299,13 @@ document.addEventListener('DOMContentLoaded', function() {
     hideById("loggedin");
     showById("notloggedin");
   }
+
+  const pumpdata = await fetchConnectedPump();
+  insertPumpCards(pumpdata);
+
+
 });
+
 
 function showById(id) {
   const el = document.getElementById(id);
@@ -361,11 +369,171 @@ document.getElementById('mobile').addEventListener('input', function() {
       showById("otpsec");
     }
   });
+
+
   function logout() {
     localStorage.clear();
     window.location.reload();
     toggleFullScreen();
   }
+
+
+
+    /* Supabase client setup */
+  const SUPABASE_URL = 'https://gxzwomspqmdlbwqmursb.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4endvbXNwcW1kbGJ3cW11cnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3ODkxNzIsImV4cCI6MjA2NDM2NTE3Mn0.S-IG5DEmllDPxCDeKfKjRyjYvDcbM_JAmRQqtqMQpLc';
+  const supabaseclient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  
+
+  async function stopPump(pump_no) {
+    const { data: pumps, error: fetchError } = await supabaseclient
+      .from('pump')
+      .select('*')
+      .eq('pump_no', pump_no)
+      .limit(1);
+
+    if (fetchError || !pumps || pumps.length === 0) {
+      showToast("Pump not found");
+      return { success: false, message: 'Pump not found' };
+    }
+
+    const pump = pumps[0];
+    if (!pump.status) {
+      showToast("Pump is already stopped");
+      return { success: false, message: 'Pump already stopped' };
+    }
+
+    const { error: updateError } = await supabaseclient
+      .from('pump')
+      .update({ status: false })
+      .eq('pump_no', pump_no);
+
+    if (updateError) {
+      showToast("Failed to stop pump");
+      return { success: false, message: 'Failed to stop pump' };
+    }
+    showToast("Pump stopped successfully");
+    return { success: true, message: 'Pump stopped successfully' };
+  }
+
+
+  async function startPump(pump_no) {
+    const { data: pumps, error: fetchError } = await supabaseclient
+      .from('pump')
+      .select('*')
+      .eq('pump_no', pump_no)
+      .limit(1);
+
+    if (fetchError || !pumps || pumps.length === 0) {
+      showToast("Pump is not Found");
+      return { success: false, message: 'Pump not found' };
+    }
+
+  
+    const pump = pumps[0];
+    if (pump.status === true) {
+      showToast("Currntly poump is busy you can't connect");
+      return { success: false, message: 'Pump is busy' };
+    }
+
+  // Update status to true (start pump)
+  const { error: updateError } = await supabaseclient
+      .from('pump')
+      .update({ status: true })
+      .eq('pump_no', pump_no);
+
+    if (updateError) {
+      showToast("Faild to start Pump");
+      return { success: false, message: 'Failed to start pump' };
+    }
+    showToast("Pump started successfully");
+    return { success: true, message: 'Pump started successfully' };
+  }
+
+
+
+  // taotigy
+  function showToast(text) {
+      Toastify({
+        text: text,
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#4CAF50"
+      }).showToast();
+    }
+
+
+  
+
+  async function fetchConnectedPump() {
+    const { data, error } = await supabaseclient
+      .from('pump')
+      .select('*')
+      .eq('status', true)
+    if (error) {
+      console.error('Error fetching runing pummp:', error);
+      return null;
+    }
+    console.log("here is connected pump data")
+    console.log(data)
+    return data;
+  }
+
+
+  /* Real-time updates for pump table */
+  supabaseclient
+    .channel('pump-changes')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'pump' },
+      async (payload) => {
+        // Fetch latest data and re-render pump list
+        const pumpdata = await fetchConnectedPump();
+        insertPumpCards(pumpdata);
+      }
+    )
+    .subscribe();
+
+
+function insertPumpCards(pumpArray) {
+  const connectedPumpDiv = document.getElementById('connectedpump');
+  connectedPumpDiv.innerHTML = '';
+
+  pumpArray.forEach(pump => {
+    const isRunning = pump.status;
+
+    const card = document.createElement('div');
+    card.className = "w-full mb-3 p-4 bg-white rounded-2xl shadow-md border flex flex-row justify-between items-center";
+
+    card.innerHTML = `
+      <div>
+        <h2 class="text-lg font-bold text-gray-800">Pump ID: ${pump.pump_no}</h2>
+        <p class="text-sm text-gray-600">Status: 
+          <span class="${isRunning ? 'text-green-600' : 'text-red-600'} font-medium">
+            ${isRunning ? 'Running' : 'Stopped'}
+          </span>
+        </p>
+      </div>
+
+      ${isRunning ? `
+      <button
+      onClick="stopPump(${pump.pump_no})"
+      class="flex items-center gap-2 text-white bg-red-500 hover:bg-red-600 font-semibold px-4 py-2 rounded-lg transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        Stop
+      </button>
+      ` : ''}
+    `;
+
+    connectedPumpDiv.appendChild(card);
+  });
+}
+
+
 
 </script>
 </html>
