@@ -433,7 +433,7 @@ document.getElementById('mobile').addEventListener('input', function() {
   
     const pump = pumps[0];
     if (pump.status === true) {
-      showToast("Currntly poump is busy you can't connect");
+      showToast("Currently pump is busy, you can't connect");
       return { success: false, message: 'Pump is busy' };
     }
 
@@ -532,7 +532,6 @@ function insertPumpCards(pumpArray) {
     connectedPumpDiv.appendChild(card);
   });
 }
-
 
 
 </script>
