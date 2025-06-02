@@ -11,6 +11,7 @@
   <link rel="manifest" href="./manifest.json" />
   <link rel="apple-touch-icon" href="./logo/icon-192x192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
   <script>
     // Register Service Worker
@@ -113,66 +114,127 @@
 
 <div id="loggedin">
     <!-- Header -->
-    <nav class="fixed top-0 left-0 right-0 bg-white border-t">
+    <nav class="fixed top-0 z-100 left-0 right-0 bg-white border-t">
       <div class="p-4 flex justify-between items-center">
-        <div>
-          <h1 class="text-xl font-bold text-blue-700">स्मार्ट पंप</h1>
-          <p class="text-sm text-gray-500">नमस्ते किसान मित्र</p>
-        </div>
-        <button class="px-3 py-1 bg-gray-200 text-sm rounded-full" onclick="toggleFullScreen()">
-          <img src="./assest/icons/bell-svgrepo-com.svg" alt="होम" class="w-6 h-6 mb-1" />
+        <!-- Left: Profile Button -->
+        <button class="px-3 py-1 bg-gray-200 rounded-full" onclick="window.location.href='#profile'">
+          <span class="text-2xl">👤</span>
         </button>
+        <div>
+          <h1 class="text-xl font-bold text-blue-700 text-center">स्मार्ट पंप</h1>
+          <p class="text-sm text-gray-500 text-center">नमस्ते किसान मित्र</p>
+        </div>
+        <!-- Right: Search and Bell Imojis -->
+        <div class="flex gap-2">
+          <button class="px-2 py-1 bg-gray-200 rounded-full" onclick="window.location.href='#search'">
+            <span class="text-2xl">🔍</span>
+          </button>
+          <button class="px-2 py-1 bg-gray-200 rounded-full" onclick="toggleFullScreen()">
+            <span class="text-2xl">🔔</span>
+          </button>
+        </div>
       </div>
     </nav>
+ 
+    
 
     <!-- Bottom Navigation -->
-    <div class="mt-8">
-        <div class="h-20">
+    <div class="mt-16">
+        <div class="">
             <h1 class="text-transparent">hello</h1>
-        </div>
-      <!-- Main Scan Button -->
-      <div class="flex justify-center my-6">
-        <button onclick="openCamera()" class="bg-blue-600 text-white text-lg font-semibold rounded-full w-40 h-40 flex items-center justify-center shadow-lg">
-          पंप स्कैन करें
-        </button>
+        </div>    
+    </div>
+
+       <!-- Carousel wrapper -->
+    <div class="px-4">
+      <div id="default-carousel" class="relative w-full " data-carousel="slide">
+          <div class="relative h-20  overflow-hidden rounded-lg md:h-96">
+              <!-- Item 1 -->
+              <div class="duration-700 ease-in-out rounded-lg h-[75px]" data-carousel-item="active">
+                  <img src="./crousel/first.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+              </div>
+              <!-- Item 2 -->
+              <div class="duration-700 ease-in-out" data-carousel-item>
+                  <img src="./crousel/second.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+              </div>
+              <!-- Item 2 -->
+              <div class="duration-700 ease-in-out" data-carousel-item>
+                  <img src="./crousel/second.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+              </div>
+              <!-- Item 2 -->
+              <div class="duration-700 ease-in-out" data-carousel-item>
+                  <img src="./crousel/second.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+              </div>
+              <!-- Item 2 -->
+              <div class="duration-700 ease-in-out" data-carousel-item>
+                  <img src="./crousel/second.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+              </div>
+          </div>
+          <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 left-1/2 bottom-[-20px] space-x-3 rtl:space-x-reverse">
+              <button type="button" class="w-1.5 h-1.5 bg-gray-300 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+              <button type="button" class="w-1.5 h-1.5 bg-gray-300 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+              <button type="button" class="w-1.5 h-1.5 bg-gray-300 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+              <button type="button" class="w-1.5 h-1.5 bg-gray-300 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+            </div>
       </div>
-      <form id="pumpConnectForm" class="flex flex-col items-center my-4 gap-2">
-        <input id="pumpNoInput" type="text" maxlength="10" placeholder="पंप नंबर दर्ज करें" class="w-60 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center" />
-        <button type="submit" class="bg-green-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-green-700 transition">
-          कनेक्ट करें
-        </button>
-      </form>
-      <script>
-        function handlePumpConnectSubmit(e) {
-          e.preventDefault();
-          const pumpNo = document.getElementById('pumpNoInput').value.trim();
-          if (!pumpNo) {
-        alert('कृपया पंप नंबर दर्ज करें');
-        return;
+    </div>
+
+       <!-- Connect Pump Form-->
+    <div class="mt-1 px-4">
+      <div class="max-w-md mx-auto mt-8 p-4 bg-white rounded-2xl shadow-md border">
+        <form id="pumpConnectForm" class="flex flex-col items-center my-4 gap-2">
+          <input id="pumpNoInput" type="text" maxlength="10" placeholder="पंप नंबर दर्ज करें" class="w-60 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center" />
+          <button type="submit" class="bg-green-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-green-700 transition">
+            कनेक्ट करें
+          </button>
+        </form>
+        <script>
+          function handlePumpConnectSubmit(e) {
+            e.preventDefault();
+            const pumpNo = document.getElementById('pumpNoInput').value.trim();
+            if (!pumpNo) {
+          alert('कृपया पंप नंबर दर्ज करें');
+          return;
+            }
+            startPump(pumpNo);
           }
-          startPump(pumpNo);
-        }
-        document.getElementById('pumpConnectForm').addEventListener('submit', handlePumpConnectSubmit);
-      </script>
-
-
-      <!-- Options -->
-      <div class="grid grid-cols-3 gap-4 text-center px-4">
-        <div>
-          <div class="text-blue-600 text-2xl">↩️</div>
-          <p class="text-sm mt-1">मेरा इतिहास</p>
-        </div>
-        <div>
-          <div class="text-blue-600 text-2xl">💰</div>
-          <p class="text-sm mt-1">बैलेंस जोड़ें</p>
-        </div>
-        <div>
-          <div class="text-blue-600 text-2xl">📞</div>
-          <p class="text-sm mt-1">मदद</p>
-        </div>
+          document.getElementById('pumpConnectForm').addEventListener('submit', handlePumpConnectSubmit);
+        </script>
+      </div>
     </div>
 
 
+      <!-- Quick Access Heading -->
+      <div class="flex justify-center mt-8">
+        <h2 class="text-lg font-semibold text-gray-800">त्वरित एक्सेस</h2>
+      </div>
+      <!-- Main Action Card with Four Buttons in One Line -->
+    <div class="mt-1 px-4">
+
+      <div class="flex justify-center my-6">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-4 flex flex-row items-center justify-between gap-3">
+          <button onclick="openCamera()" class="flex-1 flex flex-col items-center justify-center bg-blue-600 text-white font-semibold rounded-lg py-4 mx-1 hover:bg-blue-700 transition">
+        <span class="text-2xl mb-1">🔍</span>
+        <span class="text-sm">पंप स्कैन</span>
+          </button>
+          <button class="flex-1 flex flex-col items-center justify-center bg-blue-100 text-blue-600 font-semibold rounded-lg py-4 mx-1 hover:bg-blue-200 transition">
+        <span class="text-2xl mb-1">↩️</span>
+        <span class="text-sm">मेरा इतिहास</span>
+          </button>
+          <button class="flex-1 flex flex-col items-center justify-center bg-blue-100 text-blue-600 font-semibold rounded-lg py-4 mx-1 hover:bg-blue-200 transition">
+        <span class="text-2xl mb-1">💰</span>
+        <span class="text-sm">बैलेंस जोड़ें</span>
+          </button>
+          <button class="flex-1 flex flex-col items-center justify-center bg-blue-100 text-blue-600 font-semibold rounded-lg py-4 mx-1 hover:bg-blue-200 transition">
+        <span class="text-2xl mb-1">📞</span>
+        <span class="text-sm">मदद</span>
+          </button>
+        </div>
+      </div>
+      </div>
+
+  
     <!-- Weather Card -->
     <div class="mt-1 px-4">
       <div class="bg-yellow-50 p-5 rounded shadow-md">
@@ -246,7 +308,7 @@
     </div>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md hidden">
       <div class="grid grid-cols-4 text-center text-sm text-gray-700">
         <div class="flex flex-col items-center justify-center py-2 text-blue-600">
           <img src="./assest/icons/home-1-svgrepo-com.svg" alt="होम" class="w-6 h-6 mb-1" />
